@@ -64,7 +64,7 @@ namespace AppliedCrypto
             BitArray right = new BitArray(16);
             BitArray left = new BitArray(16);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 8; i++)
             {
                 keyBits = (BitArray) keyStack.Pop();
                 right = (BitArray)list[1].Clone();
@@ -124,7 +124,7 @@ namespace AppliedCrypto
         {
             key obj = new key(keyString);
             Stack keyStack = new Stack();
-            for (int counter = 0; counter < 4; counter++)
+            for (int counter = 0; counter < 8; counter++)
             {
                 keyStack.Push(obj.GetNextKey());
             }
