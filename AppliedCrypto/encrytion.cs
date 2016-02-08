@@ -62,15 +62,21 @@ namespace AppliedCrypto
         {
             key obj = new key(keyString);
             BitArray keyBits = new BitArray(16);
-            keyBits = obj.GetNextKey();
-
+            
             List<BitArray> list = BitOperations.splitKBits(bitText32);
-            BitArray right = (BitArray) list[1].Clone();
-            //Console.WriteLine("Input 32 bits split into : " + BitOperations.getBinaryString(list[0]) +" and "+ BitOperations.getBinaryString(list[1]));
+            BitArray right = new BitArray(16);
+            BitArray left = new BitArray(16);
 
-            BitArray left = list[0].Xor(feistelFunction(keyBits, list[1]));
-            //Console.WriteLine("left after xoring woth fiestal output : " + BitOperations.getBinaryString(left));
+            for (int i = 0; i < 4; i++)
+            {
+                keyBits = obj.GetNextKey();
+                right = (BitArray)list[1].Clone();
+                //Console.WriteLine("Input 32 bits split into : " + BitOperations.getBinaryString(list[0]) +" and "+ BitOperations.getBinaryString(list[1]));
 
+                left = list[0].Xor(feistelFunction(keyBits, list[1]));
+                //Console.WriteLine("left after xoring woth fiestal output : " + BitOperations.getBinaryString(left));
+                list[0] = right; list[1] = left;
+            }
             return BitOperations.CombineBitArrays(left, right);
         }
 
